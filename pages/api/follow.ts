@@ -4,7 +4,7 @@ import prisma from '@/libs/prismadb';
 import serverAuth from "@/libs/serverAuth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST' && req.method !== 'DELETE') {
+  if (req.method !== 'POST' && req.method !== 'PATCH') {
     return res.status(405).end();
   }
 
@@ -56,7 +56,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       
     }
 
-    if (req.method === 'DELETE') {
+    if (req.method === 'PATCH') {
       updatedFollowingIds = updatedFollowingIds.filter((followingId) => followingId !== userId);
     }
 

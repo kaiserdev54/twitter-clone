@@ -4,13 +4,12 @@ import prisma from '@/libs/prismadb';
 import serverAuth from "@/libs/serverAuth";
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (req.method !== 'POST' && req.method !== 'DELETE') {
+  if (req.method !== 'POST' && req.method !== 'PATCH') {
     return res.status(405).end();
   }
 
   try {
     const { postId } = req.body;
-
     const { currentUser } = await serverAuth(req, res);
 
     if (!postId || typeof postId !== 'string') {
@@ -63,7 +62,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       // NOTIFICATION PART END
     }
 
-    if (req.method === 'DELETE') {
+    if (req.method === 'PATCH') {
       updatedLikedIds = updatedLikedIds.filter((likedId) => likedId !== currentUser?.id);
     }
 
